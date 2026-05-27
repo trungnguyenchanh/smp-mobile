@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#4f46e5">
-<title>SMP Mobile v3.1 — 2-Agent Flow</title>
+<title>SMP Mobile v3.3 — 3-Sided</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -358,8 +358,8 @@ input, textarea, select { font-family: inherit; }
         <div class="brand-name">Service Management Platform</div>
       </div>
     </div>
-    <div class="brand-tag">VERSION 3.1 · 2-AGENT FLOW</div>
-    <div class="subtitle">Quy trình 10 bước · 2 vai trò thợ <strong>Survey + Execution</strong> · hybrid dispatch · photo proof · asset tracking · maintenance contracts.</div>
+    <div class="brand-tag">VERSION 3.3 · 3-SIDED · Customer + Technician + Partner</div>
+    <div class="subtitle">Partner persona mới: vừa là khách hàng B2B (đặt đơn), vừa là supplier (cung cấp đội thợ). Hùng AC Service là demo · partner_owner role.</div>
   </div>
 
   <div class="device-frame__phones">
@@ -391,7 +391,12 @@ input, textarea, select { font-family: inherit; }
   </div>
 
   <div class="device-frame__footer">
-    <div>SMP v3.1 · 2-Agent Flow (Survey + Execution) · Asset Mgmt · Contracts · Geo</div>
+    <div>SMP v3.3 · 3-sided marketplace · Customer + Technician + Partner</div>
+    <div class="links">
+      <a href="?mode=customer">Mở app Customer</a> ·
+      <a href="?mode=technician">Mở app Technician</a> ·
+      <a href="?mode=partner">Mở app Partner</a>
+    </div>
     <div class="links">
       <a href="?mode=customer">Mở app Customer</a> ·
       <a href="?mode=technician">Mở app Technician</a>
@@ -1847,6 +1852,778 @@ SMP.technician.surveyjob = () => `
   </div>
 `;
 
+// ============ V3.2 NEW SCREENS ============
+
+SMP.customer.voucher = () => `
+  ${statusBar()}
+  <div class="screen">
+    ${pageHeader({ back: 'booking', title: 'Chọn voucher', right: '<span class="fs-11 text-faint">3 voucher</span>' })}
+
+    <div class="card" style="background:var(--primary-bg);border-color:var(--primary-border);">
+      <div class="row" style="gap:10px;">
+        <div style="width:36px;height:36px;border-radius:8px;background:white;color:var(--primary);display:grid;place-items:center;"><i class="ti ti-ticket" style="font-size:20px;"></i></div>
+        <div class="flex-1">
+          <div class="fs-12 fw-bold" style="color:var(--primary-text);">Voucher từ inside</div>
+          <div class="fs-11" style="color:#3730a3;">List dưới là voucher đã nhận · còn input mã manual</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="label-up mt-14">Nhập mã voucher</div>
+    <div class="card flush" style="padding:8px;">
+      <div style="display:flex;gap:6px;">
+        <input class="input" placeholder="Nhập mã HOTSUMMER20..." style="flex:1;font-family:var(--font-mono);text-transform:uppercase;">
+        <button class="btn btn--primary">Áp dụng</button>
+      </div>
+    </div>
+
+    <div class="label-up mt-14">Voucher của bạn · 3</div>
+
+    <div class="card tap" style="border-color:var(--primary);box-shadow:0 0 0 2px var(--primary-bg);">
+      <div class="row" style="gap:12px;">
+        <div style="width:42px;height:42px;border-radius:10px;background:var(--primary);color:white;display:grid;place-items:center;">
+          <i class="ti ti-percentage" style="font-size:22px;"></i>
+        </div>
+        <div class="flex-1">
+          <div class="fs-14 fw-bold">Giảm 20% mùa hè</div>
+          <div class="fs-11 text-mute mono">HOTSUMMER20 · max 200k · min order 300k</div>
+          <div class="fs-11 text-green" style="margin-top:2px;">Hết hạn 31/08 · áp dụng được</div>
+        </div>
+        <i class="ti ti-circle-check" style="color:var(--primary);font-size:22px;"></i>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="row" style="gap:12px;">
+        <div style="width:42px;height:42px;border-radius:10px;background:var(--green);color:white;display:grid;place-items:center;">
+          <i class="ti ti-discount-2" style="font-size:22px;"></i>
+        </div>
+        <div class="flex-1">
+          <div class="fs-14 fw-bold">Giảm 50k cho lần đầu</div>
+          <div class="fs-11 text-mute mono">NEWBIE50 · min order 200k</div>
+          <div class="fs-11 text-mute" style="margin-top:2px;">Đã dùng · không áp dụng được</div>
+        </div>
+        <i class="ti ti-circle" style="color:var(--text-faint);font-size:22px;"></i>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="row" style="gap:12px;">
+        <div style="width:42px;height:42px;border-radius:10px;background:#7c3aed;color:white;display:grid;place-items:center;">
+          <i class="ti ti-gift" style="font-size:22px;"></i>
+        </div>
+        <div class="flex-1">
+          <div class="fs-14 fw-bold">Giảm 15% cho Silver</div>
+          <div class="fs-11 text-mute mono">Q3PROMO · max 150k · min 250k</div>
+          <div class="fs-11 text-green" style="margin-top:2px;">Hết hạn 30/09 · áp dụng được</div>
+        </div>
+        <i class="ti ti-circle" style="color:var(--text-faint);font-size:22px;"></i>
+      </div>
+    </div>
+
+    <div class="card mt-14" style="background:var(--bg-elev);border:none;">
+      <div class="row between fs-12">
+        <span class="text-mute">Voucher từ <span class="mono">inside.local/v1/vouchers</span></span>
+        <span class="text-green">✓ Live</span>
+      </div>
+    </div>
+
+    <button class="btn btn--primary btn--full mt-14" data-go="payment">Áp dụng & thanh toán →</button>
+  </div>
+`;
+
+SMP.customer.payment = () => `
+  ${statusBar()}
+  <div class="screen">
+    ${pageHeader({ back: 'voucher', title: 'Thanh toán' })}
+
+    <div class="card">
+      <div class="fs-12 text-mute fw-med mb-12">CHI TIẾT ĐƠN</div>
+      <div style="font-size:12.5px;line-height:1.8;">
+        <div class="row between"><span>Sửa điều hoà · 5 step</span><span class="mono">670,000 đ</span></div>
+        <div class="row between"><span>Phí khảo sát</span><span class="mono">80,000 đ</span></div>
+        <div class="row between text-green"><span>Voucher HOTSUMMER20</span><span class="mono">−150,000 đ</span></div>
+        <div class="row between text-mute"><span>VAT 10%</span><span class="mono">60,000 đ</span></div>
+        <div style="border-top:1px solid var(--border);margin-top:8px;padding-top:8px;display:flex;justify-content:space-between;">
+          <span class="fw-bold fs-14">Tổng</span><span class="fw-bold fs-15 mono text-primary">660,000 đ</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="label-up mt-14">Phương thức thanh toán</div>
+    <div class="card flush">
+      <div class="list-item" style="background:var(--primary-bg);border-left:3px solid var(--primary);">
+        <div class="list-item__icon" style="background:white;color:var(--primary);">
+          <i class="ti ti-credit-card"></i>
+        </div>
+        <div class="list-item__body">
+          <div class="list-item__title fs-13">VCB Mastercard</div>
+          <div class="list-item__sub mono">•••• 4821 · default</div>
+        </div>
+        <i class="ti ti-circle-check" style="color:var(--primary);font-size:20px;"></i>
+      </div>
+      <div class="list-item">
+        <div class="list-item__icon" style="background:#fce7f3;color:#be185d;">
+          <i class="ti ti-device-mobile"></i>
+        </div>
+        <div class="list-item__body">
+          <div class="list-item__title fs-13">MoMo</div>
+          <div class="list-item__sub mono">+84 90 ••• 7842</div>
+        </div>
+        <i class="ti ti-circle" style="color:var(--text-faint);font-size:20px;"></i>
+      </div>
+      <div class="list-item">
+        <div class="list-item__icon" style="background:#fef3c7;color:#92400e;">
+          <i class="ti ti-qrcode"></i>
+        </div>
+        <div class="list-item__body">
+          <div class="list-item__title fs-13">VietQR</div>
+          <div class="list-item__sub">Quét QR ngân hàng bất kỳ</div>
+        </div>
+        <i class="ti ti-circle" style="color:var(--text-faint);font-size:20px;"></i>
+      </div>
+      <div class="list-item">
+        <div class="list-item__icon" style="background:var(--bg-elev);color:var(--text-mute);">
+          <i class="ti ti-plus"></i>
+        </div>
+        <div class="list-item__body">
+          <div class="list-item__title fs-13 text-mute">Thêm thẻ mới</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card mt-14" style="background:var(--bg-elev);border:none;">
+      <div class="row" style="gap:10px;">
+        <i class="ti ti-shield-check" style="font-size:20px;color:var(--green);"></i>
+        <div class="flex-1 fs-11" style="line-height:1.5;">
+          <strong>Bảo mật bởi inside Payment Gateway</strong><br>
+          <span class="text-mute">SMP redirect bạn sang inside để nhập OTP · không lưu thông tin thẻ.</span>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn btn--primary btn--full mt-14" style="padding:14px;font-size:14px;" data-go="paymentwait">
+      <i class="ti ti-external-link"></i> Mở inside để thanh toán 660k
+    </button>
+
+    <div class="fs-11 text-faint text-center mt-12" style="line-height:1.5;">
+      Đơn sẽ được giữ trong 30 phút · sau khi thanh toán xong<br>quay lại app SMP để xem đơn
+    </div>
+  </div>
+`;
+
+SMP.customer.paymentwait = () => `
+  ${statusBar()}
+  <div class="screen text-center" style="padding-top:60px;">
+    <div style="width:100px;height:100px;border-radius:50%;background:var(--primary-bg);color:var(--primary);display:grid;place-items:center;margin:0 auto 16px;">
+      <i class="ti ti-loader" style="font-size:50px;animation:spin 2s linear infinite;"></i>
+    </div>
+    <div class="fs-18 fw-bold">Đang đợi thanh toán</div>
+    <div class="fs-12 text-mute" style="margin-top:4px;">Mã giao dịch <span class="mono">pi_01HX7K3F</span></div>
+
+    <div class="card mt-14" style="text-align:left;">
+      <div class="row between fs-12 text-mute fw-med mb-12">
+        <span>Webhook từ inside</span>
+        <span class="text-amber">Đang chờ...</span>
+      </div>
+      <div style="font-size:11px;line-height:1.7;font-family:var(--font-mono);">
+        <div class="text-green">10:05:14 · Created payment intent</div>
+        <div class="text-green">10:05:15 · Redirected to inside checkout</div>
+        <div class="text-amber">10:05:32 · Awaiting webhook · payment.succeeded</div>
+      </div>
+    </div>
+
+    <div class="card mt-12" style="background:var(--bg-elev);border:none;text-align:left;">
+      <div class="fs-12 fw-med mb-12">Khi inside notify thành công:</div>
+      <div class="fs-11 text-mute" style="line-height:1.6;">
+        1. SMP nhận webhook <span class="mono">payment.succeeded</span><br>
+        2. Update order status → <strong>paid</strong><br>
+        3. Trigger dispatch Survey Agent<br>
+        4. Push notification cho bạn
+      </div>
+    </div>
+
+    <button class="btn btn--outline btn--full mt-14" data-go="orders">
+      Về danh sách đơn
+    </button>
+  </div>
+  <style>@keyframes spin { from { transform: rotate(0); } to { transform: rotate(360deg); } }</style>
+`;
+
+SMP.technician.materialpick = () => `
+  ${statusBar()}
+  <div class="screen">
+    ${pageHeader({ back: 'surveyjob', title: 'Chọn vật tư', right: '<span class="fs-11 text-faint">3 step</span>' })}
+
+    <div class="card" style="background:#fef3c7;border-color:#fcd34d;">
+      <div class="row" style="gap:10px;">
+        <i class="ti ti-package" style="font-size:20px;color:#92400e;"></i>
+        <div class="flex-1 fs-11" style="color:#92400e;line-height:1.5;">
+          <strong>Stock real-time từ wms.</strong> Giá bán cố định theo SMP catalog · không sửa được.
+        </div>
+      </div>
+    </div>
+
+    <div class="label-up mt-14">Step 3 · Thay tụ điện</div>
+    <div class="card">
+      <div class="fs-12 fw-med mb-12">Tụ điện 35μF · cần 1 cái</div>
+
+      <div class="mat-picker-row" style="background:white;border:1px solid var(--primary);box-shadow:0 0 0 2px var(--primary-bg);">
+        <div class="mat-picker-row__radio mat-picker-row__radio--checked"></div>
+        <div>
+          <div style="font-weight:600;font-size:12.5px;">Sanyo CBB60-35</div>
+          <div class="text-green fs-11" style="margin-top:1px;">
+            <i class="ti ti-check" style="font-size:11px;vertical-align:-1px;"></i>
+            Kho cá nhân: <strong>3 cái</strong>
+          </div>
+          <div class="fs-11 text-mute">BH 6 tháng · Voltage 450V</div>
+        </div>
+        <div class="text-primary fw-med mono">80k</div>
+      </div>
+
+      <div class="mat-picker-row">
+        <div class="mat-picker-row__radio"></div>
+        <div>
+          <div style="font-weight:500;font-size:12.5px;">Panasonic AT-35F</div>
+          <div class="text-amber fs-11" style="margin-top:1px;">
+            <i class="ti ti-building-warehouse" style="font-size:11px;vertical-align:-1px;"></i>
+            Kho chung HCMC: 12 cái · cần lấy
+          </div>
+          <div class="fs-11 text-mute">BH 12 tháng · ±5%</div>
+        </div>
+        <div class="mono">95k</div>
+      </div>
+
+      <div class="mat-picker-row mat-picker-row--unavailable">
+        <div class="mat-picker-row__radio"></div>
+        <div>
+          <div style="font-weight:500;font-size:12.5px;">TQ no-brand GEN-35</div>
+          <div class="text-red fs-11" style="margin-top:1px;">
+            <i class="ti ti-x" style="font-size:11px;vertical-align:-1px;"></i>
+            Hết hàng tất cả kho
+          </div>
+        </div>
+        <div class="mono text-mute">45k</div>
+      </div>
+
+      <button class="btn btn--outline btn--full" style="margin-top:8px;border-style:dashed;font-size:12px;padding:8px;">
+        <i class="ti ti-plus" style="font-size:14px;"></i> Vật tư khác (free-form, ops verify)
+      </button>
+    </div>
+
+    <div class="label-up mt-14">Step 4 · Nạp gas R32</div>
+    <div class="card">
+      <div class="fs-12 fw-med mb-12">Gas R32 · cần 0.8 kg</div>
+
+      <div class="mat-picker-row" style="background:white;border:1px solid var(--primary);box-shadow:0 0 0 2px var(--primary-bg);">
+        <div class="mat-picker-row__radio mat-picker-row__radio--checked"></div>
+        <div>
+          <div style="font-weight:600;font-size:12.5px;">SubZero R32-800</div>
+          <div class="text-green fs-11" style="margin-top:1px;">Kho chung HCMC: 241 bình</div>
+        </div>
+        <div class="text-primary fw-med mono">400k</div>
+      </div>
+
+      <div class="mat-picker-row">
+        <div class="mat-picker-row__radio"></div>
+        <div>
+          <div style="font-weight:500;font-size:12.5px;">KlimaCool R32-Pro-800</div>
+          <div class="text-green fs-11" style="margin-top:1px;">Kho chung HCMC: 87 bình · purity 99.9%</div>
+        </div>
+        <div class="mono">450k</div>
+      </div>
+    </div>
+
+    <div class="card mt-14" style="background:var(--primary-bg);border-color:var(--primary-border);">
+      <div class="row between fs-12 fw-med" style="color:var(--primary-text);">
+        <span>Tổng vật tư báo giá khách</span>
+        <span class="mono">+480,000 đ</span>
+      </div>
+      <div class="fs-11 mt-8" style="color:#3730a3;">Tụ Sanyo 80k + Gas SubZero 400k</div>
+    </div>
+
+    <button class="btn btn--primary btn--full mt-14" style="padding:14px;">
+      Xác nhận & gửi báo giá khách →
+    </button>
+
+    <div class="fs-11 text-faint text-center mt-12" style="line-height:1.5;">
+      Khi khách duyệt: wms sẽ reserve tự động<br>TTL 24h · auto-release nếu cancel
+    </div>
+  </div>
+`;
+
+SMP.technician.matreport = () => `
+  ${statusBar()}
+  <div class="screen">
+    ${pageHeader({ back: 'job', title: 'Báo cáo vật tư đã dùng' })}
+
+    <div class="card" style="background:var(--tech-bg);border-color:var(--tech-border);">
+      <div class="row" style="gap:10px;">
+        <i class="ti ti-check" style="font-size:20px;color:var(--tech-text);"></i>
+        <div class="flex-1">
+          <div class="fs-13 fw-bold text-green">Step ac-replace-capacitor đã xong</div>
+          <div class="fs-11" style="color:var(--tech-dark);">Báo cáo vật tư đã dùng để wms commit out_stock</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="label-up mt-14">Vật tư đã reserve (BOM)</div>
+    <div class="card">
+      <div class="row between mb-12">
+        <div>
+          <div class="fs-13 fw-bold">Sanyo CBB60-35</div>
+          <div class="fs-11 text-mute mono">Reservation rsv_01HX7K5B · qty 1</div>
+        </div>
+        <span class="pill pill--green">Đã dùng</span>
+      </div>
+      <div style="background:var(--bg-elev);padding:10px;border-radius:6px;margin-top:8px;">
+        <div class="row between fs-12">
+          <span class="text-mute">Số lượng thực tế</span>
+          <span class="fw-med mono">1 cái</span>
+        </div>
+        <div class="row between fs-12 mt-8">
+          <span class="text-mute">Bán cho khách</span>
+          <span class="fw-med mono text-primary">80,000 đ</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="label-up mt-14">Thêm vật tư phát sinh <span class="pill pill--amber no-dot" style="font-size:10px;margin-left:6px;">OPS VERIFY</span></div>
+    <div class="card">
+      <div class="fs-11 text-mute mb-12">Nếu dùng thêm vật tư ngoài BOM (vd băng keo, dây buộc) gõ tên + số lượng dưới đây. Ops sẽ review sau.</div>
+      <input class="input" placeholder="Tên vật tư..." style="margin-bottom:6px;">
+      <div style="display:grid;grid-template-columns:1fr 80px;gap:6px;">
+        <input class="input" placeholder="Số lượng (vd 1)">
+        <select class="input"><option>cái</option><option>m</option><option>kg</option></select>
+      </div>
+      <button class="btn btn--outline btn--full" style="margin-top:8px;font-size:12px;border-style:dashed;">
+        <i class="ti ti-plus"></i> Thêm dòng
+      </button>
+    </div>
+
+    <div class="label-up mt-14">Ảnh proof step done</div>
+    <div class="card flush" style="padding:10px;">
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;">
+        <div style="aspect-ratio:1;border-radius:6px;background:linear-gradient(135deg,#bbf7d0,#16a34a);display:grid;place-items:center;position:relative;"><i class="ti ti-camera" style="color:white;font-size:18px;"></i><div style="position:absolute;top:3px;left:3px;background:rgba(0,0,0,0.6);color:white;font-size:8px;padding:1px 4px;border-radius:3px;">AFTER</div></div>
+        <div style="aspect-ratio:1;border-radius:6px;background:linear-gradient(135deg,#bbf7d0,#16a34a);display:grid;place-items:center;position:relative;"><i class="ti ti-camera" style="color:white;font-size:18px;"></i><div style="position:absolute;top:3px;left:3px;background:rgba(0,0,0,0.6);color:white;font-size:8px;padding:1px 4px;border-radius:3px;">AFTER</div></div>
+        <div style="aspect-ratio:1;border-radius:6px;background:var(--bg-elev);border:1px dashed var(--border);display:grid;place-items:center;"><i class="ti ti-plus" style="color:var(--text-faint);font-size:18px;"></i></div>
+      </div>
+    </div>
+
+    <button class="btn btn--tech btn--full mt-14" style="padding:14px;">
+      <i class="ti ti-check"></i> Xác nhận · wms commit out_stock
+    </button>
+
+    <div class="card mt-12" style="background:var(--bg-elev);border:none;font-size:11px;color:var(--text-mute);line-height:1.6;">
+      <strong>Khi bấm xác nhận:</strong><br>
+      • SMP gọi <span class="mono">wms.reservations/{id}/commit</span><br>
+      • Stock thực giảm 1 cái (Sanyo CBB60-35)<br>
+      • Stock movement log thành event bus
+    </div>
+  </div>
+`;
+
+// ============ V3.3 PARTNER MANAGER PERSONA ============
+
+SMP.partner = {};
+
+SMP.partner.home = () => `
+  ${statusBar()}
+  <div class="screen">
+    <div class="screen-header" style="background:linear-gradient(135deg,#ede9fe,#dbeafe);padding:14px;border-radius:12px;margin:-12px -12px 14px -12px;">
+      <div>
+        <div class="fs-11" style="color:#5b21b6;font-weight:600;letter-spacing:0.5px;">PARTNER PORTAL · MOBILE</div>
+        <div class="screen-title" style="margin-top:2px;">Hùng AC Service</div>
+        <div class="fs-11 text-mute">Nguyễn Hùng · partner_owner</div>
+      </div>
+      <button class="icon-btn"><i class="ti ti-bell"></i></button>
+    </div>
+
+    <div class="card" style="background:linear-gradient(135deg,var(--primary),#6366f1);color:white;border:none;">
+      <div class="fs-11" style="opacity:0.85;letter-spacing:0.5px;font-weight:600;">WALLET BALANCE</div>
+      <div class="fs-22 fw-bold mono mt-8" style="margin-top:6px;">8,500,000 đ</div>
+      <div class="fs-11" style="opacity:0.85;margin-top:2px;">Đủ ~14 đơn nữa · cần topup khi &lt; 3M</div>
+      <button class="btn btn--full" style="background:white;color:var(--primary);margin-top:14px;">
+        <i class="ti ti-plus"></i> Nạp tiền vào ví
+      </button>
+    </div>
+
+    <div class="label-up mt-14">Hôm nay</div>
+    <div class="card flush">
+      <div class="list-item">
+        <div class="list-item__icon" style="background:var(--amber-bg);color:var(--amber-text);">
+          <i class="ti ti-clock"></i>
+        </div>
+        <div class="list-item__body">
+          <div class="list-item__title fs-13">3 đơn đang dispatch</div>
+          <div class="list-item__sub">Cần xem để hỗ trợ nếu chậm</div>
+        </div>
+        <i class="ti ti-chevron-right text-mute"></i>
+      </div>
+      <div class="list-item">
+        <div class="list-item__icon" style="background:var(--primary-bg);color:var(--primary);">
+          <i class="ti ti-file-text"></i>
+        </div>
+        <div class="list-item__body">
+          <div class="list-item__title fs-13">2 báo giá chờ duyệt</div>
+          <div class="list-item__sub">Khách của bạn đang chờ</div>
+        </div>
+        <i class="ti ti-chevron-right text-mute"></i>
+      </div>
+      <div class="list-item">
+        <div class="list-item__icon" style="background:var(--green-bg);color:var(--green-text);">
+          <i class="ti ti-check"></i>
+        </div>
+        <div class="list-item__body">
+          <div class="list-item__title fs-13">5 đơn hoàn thành</div>
+          <div class="list-item__sub">Thu nhập +1.8M hôm nay</div>
+        </div>
+        <i class="ti ti-chevron-right text-mute"></i>
+      </div>
+    </div>
+
+    <div class="label-up mt-14">Quick actions</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+      <button class="btn btn--primary btn--full" data-go="createorder" style="padding:18px 8px;display:flex;flex-direction:column;gap:6px;">
+        <i class="ti ti-plus" style="font-size:22px;"></i>
+        <span style="font-size:12px;">Đặt đơn mới</span>
+      </button>
+      <button class="btn btn--outline btn--full" data-go="agents" style="padding:18px 8px;display:flex;flex-direction:column;gap:6px;">
+        <i class="ti ti-users" style="font-size:22px;"></i>
+        <span style="font-size:12px;">Thợ của tôi · 8</span>
+      </button>
+    </div>
+
+    <div class="card mt-14" style="background:var(--bg-elev);border:none;">
+      <div class="fs-12 fw-med mb-12">📊 Tóm tắt 30 ngày</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;text-align:center;font-size:11px;">
+        <div>
+          <div class="fs-16 fw-bold text-primary mono">87</div>
+          <div class="text-mute">Đơn</div>
+        </div>
+        <div>
+          <div class="fs-16 fw-bold text-green mono">12.8M</div>
+          <div class="text-mute">GMV</div>
+        </div>
+        <div>
+          <div class="fs-16 fw-bold text-violet mono">4.84★</div>
+          <div class="text-mute">Rating</div>
+        </div>
+      </div>
+    </div>
+  </div>
+`;
+
+SMP.partner.orders = () => `
+  ${statusBar()}
+  <div class="screen">
+    <div class="screen-header">
+      <div class="screen-title">Đơn của tôi</div>
+      <button class="icon-btn"><i class="ti ti-filter"></i></button>
+    </div>
+
+    <div class="chips" style="margin-bottom:10px;">
+      <button class="chip active fs-11">Tất cả · 87</button>
+      <button class="chip fs-11">Đang xử lý · 6</button>
+      <button class="chip fs-11">Done · 81</button>
+    </div>
+
+    <div class="card flush">
+      <div class="list-item" data-go="orderdetail">
+        <div class="list-item__icon" style="background:var(--amber-bg);color:var(--amber-text);">
+          <i class="ti ti-file-text"></i>
+        </div>
+        <div class="list-item__body">
+          <div class="list-item__title fs-13">Sửa AC · ord_01HX7K2M</div>
+          <div class="list-item__sub fs-11">Khách Nguyễn Văn A · Q.1 · <span style="background:#ddd6fe;color:#5b21b6;padding:1px 5px;border-radius:3px;font-weight:700;font-size:9px;">PRIVATE</span></div>
+        </div>
+        <div style="text-align:right;">
+          <div class="fs-12 mono fw-med">750k</div>
+          <span class="pill pill--amber" style="font-size:10px;">B.giá</span>
+        </div>
+      </div>
+
+      <div class="list-item">
+        <div class="list-item__icon" style="background:var(--blue-bg, #dbeafe);color:#1d4ed8;">
+          <i class="ti ti-tool"></i>
+        </div>
+        <div class="list-item__body">
+          <div class="list-item__title fs-13">Sửa tủ lạnh · ord_01HX7K0V</div>
+          <div class="list-item__sub fs-11">Đơn SMP · thợ partner làm</div>
+        </div>
+        <div style="text-align:right;">
+          <div class="fs-12 mono fw-med">487k</div>
+          <span class="pill pill--blue" style="font-size:10px;">Đang sửa</span>
+        </div>
+      </div>
+
+      <div class="list-item">
+        <div class="list-item__icon" style="background:var(--green-bg);color:var(--green-text);">
+          <i class="ti ti-check"></i>
+        </div>
+        <div class="list-item__body">
+          <div class="list-item__title fs-13">Vệ sinh AC · ord_01HX7K1F</div>
+          <div class="list-item__sub fs-11">Khách Trần Thị B · Q.3</div>
+        </div>
+        <div style="text-align:right;">
+          <div class="fs-12 mono fw-med">335k</div>
+          <span class="pill pill--green" style="font-size:10px;">Done</span>
+        </div>
+      </div>
+
+      <div class="list-item">
+        <div class="list-item__icon" style="background:var(--green-bg);color:var(--green-text);">
+          <i class="ti ti-check"></i>
+        </div>
+        <div class="list-item__body">
+          <div class="list-item__title fs-13">Nóng lạnh · ord_01HX7JZP</div>
+          <div class="list-item__sub fs-11">Khách Lê Hoàng D · Q.10</div>
+        </div>
+        <div style="text-align:right;">
+          <div class="fs-12 mono fw-med">350k</div>
+          <span class="pill pill--green" style="font-size:10px;">Đã rate</span>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn btn--primary btn--full mt-14" data-go="createorder">
+      <i class="ti ti-plus"></i> Đặt đơn mới
+    </button>
+  </div>
+`;
+
+SMP.partner.createorder = () => `
+  ${statusBar()}
+  <div class="screen">
+    ${pageHeader({ back: 'home', title: 'Đặt đơn mới' })}
+
+    <div class="label-up">Khách hàng cuối</div>
+    <div class="card">
+      <input class="input" placeholder="Tên khách..." value="Nguyễn Văn A" style="margin-bottom:8px;">
+      <input class="input" placeholder="Số điện thoại..." value="+84 90 ••• 7842" style="margin-bottom:8px;">
+      <input class="input" placeholder="Địa chỉ..." value="15 Lê Lợi, P.Bến Nghé, Q.1, HCMC">
+    </div>
+
+    <div class="label-up mt-14">Service</div>
+    <div class="card">
+      <select class="input" style="margin-bottom:8px;">
+        <option>Sửa điều hoà · service-ac-repair</option>
+        <option>Vệ sinh điều hoà · service-ac-clean</option>
+        <option>Sửa máy giặt · service-washer-repair</option>
+        <option>Sửa tủ lạnh · service-fridge-repair</option>
+      </select>
+      <textarea class="input" rows="2" placeholder="Mô tả vấn đề...">Máy không lạnh, dàn lạnh chảy nước</textarea>
+    </div>
+
+    <div class="label-up mt-14">Dispatch visibility</div>
+    <div class="card">
+      <div class="list-item" style="border-left:3px solid #5b21b6;background:#ede9fe;padding:10px 12px;">
+        <div style="width:18px;height:18px;border-radius:50%;background:#5b21b6;display:grid;place-items:center;color:white;font-size:11px;">●</div>
+        <div class="list-item__body">
+          <div class="list-item__title fs-12 fw-bold">Private · chỉ thợ partner của tôi</div>
+          <div class="list-item__sub fs-10">8 thợ Hùng AC nhận đơn này</div>
+        </div>
+      </div>
+      <div class="list-item" style="padding:10px 12px;">
+        <div style="width:18px;height:18px;border-radius:50%;border:2px solid var(--text-mute);"></div>
+        <div class="list-item__body">
+          <div class="list-item__title fs-12">Open · mở rộng nếu cần</div>
+          <div class="list-item__sub fs-10">Ưu tiên thợ partner 60s, sau đó mọi thợ SMP</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="label-up mt-14">Hình thức thanh toán</div>
+    <div class="card" style="background:var(--primary-bg);border-color:var(--primary-border);">
+      <div class="row" style="gap:10px;">
+        <i class="ti ti-wallet" style="font-size:20px;color:var(--primary);"></i>
+        <div class="flex-1">
+          <div class="fs-12 fw-bold" style="color:var(--primary-text);">Trừ vào pre-paid wallet</div>
+          <div class="fs-11" style="color:#3730a3;">Balance hiện tại: 8,500,000 đ</div>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn btn--primary btn--full mt-14" style="padding:14px;">
+      Tạo đơn & dispatch →
+    </button>
+
+    <div class="fs-11 text-faint text-center mt-12">
+      Đơn sẽ dispatch tới 8 thợ Hùng AC<br>Khách cuối nhận push notification
+    </div>
+  </div>
+`;
+
+SMP.partner.agents = () => `
+  ${statusBar()}
+  <div class="screen">
+    <div class="screen-header">
+      <div class="screen-title">Thợ của tôi</div>
+      <button class="icon-btn"><i class="ti ti-user-plus"></i></button>
+    </div>
+
+    <div class="card" style="background:var(--bg-elev);border:none;">
+      <div class="row between fs-12 fw-med">
+        <span>8 thợ active</span>
+        <span class="text-green">4 đang online</span>
+      </div>
+    </div>
+
+    <div class="card flush mt-14">
+      <div class="list-item">
+        <div style="position:relative;">
+          <div class="list-item__icon" style="background:#ddd6fe;color:#5b21b6;">TK</div>
+          <div style="position:absolute;bottom:-2px;right:-2px;width:10px;height:10px;border-radius:50%;background:var(--green);border:2px solid white;"></div>
+        </div>
+        <div class="list-item__body">
+          <div class="list-item__title fs-13">Trương Minh K. · L4</div>
+          <div class="list-item__sub fs-11">ac-mechanic · 4.94★ · 84 đơn 30d</div>
+        </div>
+        <label class="toggle" style="position:relative;display:inline-block;width:36px;height:20px;">
+          <input type="checkbox" checked style="opacity:0;">
+          <span style="position:absolute;top:0;left:0;right:0;bottom:0;background:var(--green);border-radius:10px;cursor:pointer;"></span>
+          <span style="position:absolute;top:2px;right:2px;width:16px;height:16px;background:white;border-radius:50%;transition:0.2s;"></span>
+        </label>
+      </div>
+
+      <div class="list-item">
+        <div style="position:relative;">
+          <div class="list-item__icon" style="background:#ddd6fe;color:#5b21b6;">LL</div>
+          <div style="position:absolute;bottom:-2px;right:-2px;width:10px;height:10px;border-radius:50%;background:var(--green);border:2px solid white;"></div>
+        </div>
+        <div class="list-item__body">
+          <div class="list-item__title fs-13">Lê Văn L. · L4</div>
+          <div class="list-item__sub fs-11">washer-mechanic · 4.91★ · 79 đơn</div>
+        </div>
+        <label class="toggle" style="position:relative;display:inline-block;width:36px;height:20px;">
+          <input type="checkbox" checked style="opacity:0;">
+          <span style="position:absolute;top:0;left:0;right:0;bottom:0;background:var(--green);border-radius:10px;cursor:pointer;"></span>
+          <span style="position:absolute;top:2px;right:2px;width:16px;height:16px;background:white;border-radius:50%;"></span>
+        </label>
+      </div>
+
+      <div class="list-item">
+        <div style="position:relative;">
+          <div class="list-item__icon" style="background:#ddd6fe;color:#5b21b6;">DR</div>
+          <div style="position:absolute;bottom:-2px;right:-2px;width:10px;height:10px;border-radius:50%;background:var(--green);border:2px solid white;"></div>
+        </div>
+        <div class="list-item__body">
+          <div class="list-item__title fs-13">Đoàn Hữu R. · L4</div>
+          <div class="list-item__sub fs-11">ac-mechanic · 4.88★ · 74 đơn</div>
+        </div>
+        <label class="toggle" style="position:relative;display:inline-block;width:36px;height:20px;">
+          <input type="checkbox" checked style="opacity:0;">
+          <span style="position:absolute;top:0;left:0;right:0;bottom:0;background:var(--green);border-radius:10px;cursor:pointer;"></span>
+          <span style="position:absolute;top:2px;right:2px;width:16px;height:16px;background:white;border-radius:50%;"></span>
+        </label>
+      </div>
+
+      <div class="list-item">
+        <div class="list-item__icon" style="background:var(--bg-elev);color:var(--text-mute);">PM</div>
+        <div class="list-item__body">
+          <div class="list-item__title fs-13 text-mute">Phạm Quốc M. · L3</div>
+          <div class="list-item__sub fs-11 text-mute">heater · 4.86★ · offline 2h</div>
+        </div>
+        <label class="toggle" style="position:relative;display:inline-block;width:36px;height:20px;">
+          <input type="checkbox" checked style="opacity:0;">
+          <span style="position:absolute;top:0;left:0;right:0;bottom:0;background:var(--text-mute);border-radius:10px;cursor:pointer;"></span>
+          <span style="position:absolute;top:2px;right:2px;width:16px;height:16px;background:white;border-radius:50%;"></span>
+        </label>
+      </div>
+
+      <div class="list-item">
+        <div class="list-item__icon" style="background:var(--amber-bg);color:var(--amber-text);">PN</div>
+        <div class="list-item__body">
+          <div class="list-item__title fs-13">Phan Nam · L2 <span class="pill pill--amber no-dot" style="font-size:9px;margin-left:4px;">KYC pending</span></div>
+          <div class="list-item__sub fs-11 text-mute">ac-cleaner · chờ SMP duyệt KYC</div>
+        </div>
+        <label class="toggle" style="position:relative;display:inline-block;width:36px;height:20px;opacity:0.5;">
+          <input type="checkbox" style="opacity:0;">
+          <span style="position:absolute;top:0;left:0;right:0;bottom:0;background:var(--text-mute);border-radius:10px;"></span>
+          <span style="position:absolute;top:2px;left:2px;width:16px;height:16px;background:white;border-radius:50%;"></span>
+        </label>
+      </div>
+    </div>
+
+    <div class="card mt-14" style="background:var(--bg-elev);border:none;font-size:11px;color:var(--text-mute);line-height:1.6;">
+      <strong>Toggle on/off:</strong> tạm tắt thợ không nhận đơn (nghỉ phép, ốm). Khi off, thợ không thấy đơn mới nhưng vẫn xử lý đơn đang dở.
+    </div>
+  </div>
+`;
+
+SMP.partner.finance = () => `
+  ${statusBar()}
+  <div class="screen">
+    <div class="screen-header">
+      <div class="screen-title">Tài chính</div>
+      <button class="icon-btn"><i class="ti ti-download"></i></button>
+    </div>
+
+    <div class="wallet-card">
+      <div class="wallet-card__label">PRE-PAID WALLET</div>
+      <div class="wallet-card__balance" style="font-size:22px;">8,500,000 đ</div>
+      <div style="font-size:11px;opacity:0.85;margin-top:4px;">Topup gần nhất: 5,000,000 đ · 23/05/2026</div>
+      <button class="btn btn--full" style="background:white;color:var(--primary);margin-top:12px;">
+        <i class="ti ti-plus"></i> Nạp tiền
+      </button>
+    </div>
+
+    <div class="label-up mt-14">Supplier · payout pending</div>
+    <div class="card" style="background:var(--tech-bg);border-color:var(--tech-border);">
+      <div class="row between mb-12">
+        <span class="fs-12 fw-med text-green">6.2M đ sẽ về tk</span>
+        <span class="fs-10 text-mute">T+7 days</span>
+      </div>
+      <div style="font-size:11px;color:var(--tech-dark);line-height:1.6;">
+        87 đơn thợ partner làm · gross 7.2M<br>
+        − Commission SMP (20%) = 1.44M<br>
+        − Commission partner (6%) = 432k → <strong>về cty bạn</strong><br>
+        − SaaS fee = 0 (model commission_only)
+      </div>
+    </div>
+
+    <div class="label-up mt-14">Recent transactions</div>
+    <div class="card flush">
+      <div class="list-item">
+        <div class="list-item__icon" style="background:var(--red-bg);color:var(--red-text);">
+          <i class="ti ti-minus"></i>
+        </div>
+        <div class="list-item__body">
+          <div class="list-item__title fs-12 fw-med">−750,000 đ · ord_01HX7K2M</div>
+          <div class="list-item__sub fs-10">Sửa AC Nguyễn Văn A · 10:05</div>
+        </div>
+      </div>
+      <div class="list-item">
+        <div class="list-item__icon" style="background:var(--red-bg);color:var(--red-text);">
+          <i class="ti ti-minus"></i>
+        </div>
+        <div class="list-item__body">
+          <div class="list-item__title fs-12 fw-med">−335,000 đ · ord_01HX7K1F</div>
+          <div class="list-item__sub fs-10">Vệ sinh AC Trần Thị B · 09:38</div>
+        </div>
+      </div>
+      <div class="list-item">
+        <div class="list-item__icon" style="background:var(--green-bg);color:var(--green-text);">
+          <i class="ti ti-plus"></i>
+        </div>
+        <div class="list-item__body">
+          <div class="list-item__title fs-12 fw-med">+5,000,000 đ · Topup</div>
+          <div class="list-item__sub fs-10">VCB · 23/05/2026</div>
+        </div>
+      </div>
+      <div class="list-item">
+        <div class="list-item__icon" style="background:var(--red-bg);color:var(--red-text);">
+          <i class="ti ti-minus"></i>
+        </div>
+        <div class="list-item__body">
+          <div class="list-item__title fs-12 fw-med">−350,000 đ · ord_01HX7JZP</div>
+          <div class="list-item__sub fs-10">Nóng lạnh Lê Hoàng D · 22/05</div>
+        </div>
+      </div>
+    </div>
+  </div>
+`;
+
 SMP.tabs = {
   customer: [
     { id: 'home', label: 'Trang chủ', icon: 'home' },
@@ -1862,16 +2639,24 @@ SMP.tabs = {
     { id: 'earnings', label: 'Thu nhập', icon: 'coin' },
     { id: 'profile', label: 'Tôi', icon: 'user' },
   ],
+  partner: [
+    { id: 'home', label: 'Tổng quan', icon: 'layout-dashboard' },
+    { id: 'orders', label: 'Đơn', icon: 'list' },
+    { id: 'agents', label: 'Thợ', icon: 'users' },
+    { id: 'finance', label: 'Tài chính', icon: 'wallet' },
+  ],
 };
 
 SMP.screenNames = {
-  customer: { home: 'Trang chủ', booking: 'Chọn step', tracking: '2 thợ · đang sửa', receipt: 'Hoá đơn', rate: 'Đánh giá', orders: 'Đơn hàng', wallet: 'Ví', profile: 'Tôi', assets: 'Thiết bị', assetdetail: 'Chi tiết máy', contracts: 'Hợp đồng', survey: 'Khảo sát KQ' },
-  technician: { home: 'Trang chủ', job: 'Việc sửa', earnings: 'Thu nhập', skills: 'Kỹ năng', profile: 'Tôi', pool: 'Pool', photoproof: 'Photo proof', rolechoice: 'Làm tiếp?', surveyjob: 'Việc khảo sát' },
+  customer: { home: 'Trang chủ', booking: 'Chọn step', voucher: 'Voucher (inside)', payment: 'Thanh toán', paymentwait: 'Đợi thanh toán', tracking: '2 thợ', receipt: 'Hoá đơn', rate: 'Đánh giá', orders: 'Đơn hàng', wallet: 'Ví', profile: 'Tôi', assets: 'Thiết bị', assetdetail: 'Chi tiết máy', contracts: 'Hợp đồng', survey: 'Khảo sát KQ' },
+  technician: { home: 'Trang chủ', job: 'Việc sửa', earnings: 'Thu nhập', skills: 'Kỹ năng', profile: 'Tôi', pool: 'Pool', photoproof: 'Photo proof', rolechoice: 'Làm tiếp?', surveyjob: 'Khảo sát', materialpick: 'Pick vật tư', matreport: 'Báo vật tư' },
+  partner: { home: 'Dashboard', orders: 'Đơn của tôi', createorder: 'Đặt đơn', agents: 'Thợ partner', finance: 'Tài chính' },
 };
 
 SMP.quickJumps = {
-  customer: ['booking', 'tracking', 'survey', 'assets', 'contracts'],
-  technician: ['surveyjob', 'rolechoice', 'job', 'photoproof', 'pool'],
+  customer: ['booking', 'voucher', 'payment', 'tracking', 'survey', 'assets'],
+  technician: ['surveyjob', 'materialpick', 'rolechoice', 'job', 'matreport'],
+  partner: ['home', 'createorder', 'orders', 'agents', 'finance'],
 };
 
 SMP.quickJumpIcons = {
@@ -1880,18 +2665,21 @@ SMP.quickJumpIcons = {
   job: 'tool', earnings: 'coin', skills: 'certificate',
   assets: 'devices', assetdetail: 'air-conditioning', contracts: 'file-certificate', survey: 'message-circle-question',
   pool: 'users', photoproof: 'camera', rolechoice: 'arrows-shuffle', surveyjob: 'clipboard-list',
+  voucher: 'ticket', payment: 'credit-card', paymentwait: 'loader', materialpick: 'package', matreport: 'clipboard-check',
+  createorder: 'plus', agents: 'users', finance: 'wallet',
 };
 
 const state = {
   mobile: { mode: null, screen: 'home' },
-  cust: { screen: 'tracking' },
-  tech: { screen: 'rolechoice' },
+  cust: { screen: 'voucher' },
+  tech: { screen: 'materialpick' },
+  partner: { screen: 'home' },
 };
 
 function getMode() {
   const p = new URLSearchParams(window.location.search);
   const m = p.get('mode');
-  return (m === 'customer' || m === 'technician') ? m : null;
+  return (m === 'customer' || m === 'technician' || m === 'partner') ? m : null;
 }
 
 function isMobileViewport() {
