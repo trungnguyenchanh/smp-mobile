@@ -1,8 +1,0 @@
-<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-  <rect width="512" height="512" rx="112" fill="#4f46e5"/>
-  <rect x="80" y="120" width="352" height="272" rx="32" fill="#ffffff" opacity="0.1"/>
-  <text x="256" y="290" font-family="system-ui, -apple-system, sans-serif" font-size="156" font-weight="700" fill="white" text-anchor="middle" letter-spacing="-4">SMP</text>
-  <circle cx="156" cy="382" r="10" fill="#1D9E75"/>
-  <circle cx="186" cy="382" r="10" fill="#EF9F27"/>
-  <circle cx="216" cy="382" r="10" fill="#ffffff" opacity="0.7"/>
-</svg>
